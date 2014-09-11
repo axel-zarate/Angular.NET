@@ -1,13 +1,37 @@
 ﻿<!DOCTYPE html>
-
-<html>
+<!--[if lt IE 7]> <html class="ie ie6 lte9 lte8 lte7"> <![endif]-->
+<!--[if IE 7]> <html class="ie ie7 lte9 lte8 lte7"> <![endif]-->
+<!--[if IE 8]> <html class="ie ie8 lte9 lte8"> <![endif]-->
+<!--[if IE 9]> <html class="ie ie9 lte9"> <![endif]-->
+<!--[if gt IE 9]> <html class="ie"> <![endif]-->
+@Html.Raw("<!--[if !IE]><!-->")
+<html lang="en">
+@Html.Raw("<!--<![endif]-->")
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>@ViewBag.Title</title>
+	<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	@*<link rel="shortcut icon" href="@Url.Content("~/favicon.ico")" />
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="@Url.Content("~/Images/icon-144.png")" />
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="@Url.Content("~/Images/icon-114.png")" />
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="@Url.Content("~/Images/icon-72.png")" />
+		<link rel="apple-touch-icon-precomposed" href="@Url.Content("~/Images/icon-57.png")" />
+		<meta name="msapplication-TileColor" content="#ffffff" />
+		<meta name="msapplication-TileImage" content="@Url.Content(""~/Images/icon-144.png")" />*@
+
+	@Styles.Render("~/Content/css/app")
+
+	<!--[if lte IE 8]>
+			<script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	<!--[if lte IE 7]>
+			@Styles.Render("~/Content/css/font-awesome-ie7")
+		<![endif]-->
 </head>
-<body>
-    <div>
-        @RenderBody()
-    </div>
+<body ng-app="AxSoft">
+	@RenderBody()
 </body>
 </html>
