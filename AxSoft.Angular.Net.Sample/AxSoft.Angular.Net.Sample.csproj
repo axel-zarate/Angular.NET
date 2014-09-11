@@ -127,6 +127,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\Validations\Adapters\DoubleAttributeAdapter.cs" />
+    <Compile Include="Models\Validations\DoubleAttribute.cs" />
     <Compile Include="Models\Validations\PostalCodeAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -144,6 +146,7 @@
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\controllers\customersController.js" />
     <Content Include="Scripts\app\controllers\homeController.js" />
+    <Content Include="Scripts\app\directives\float.js" />
     <Content Include="Scripts\app\routes.js" />
     <Content Include="Scripts\bootstrap\alert.js" />
     <Content Include="Scripts\bootstrap\button.js" />

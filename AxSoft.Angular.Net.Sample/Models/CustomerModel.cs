@@ -1,4 +1,5 @@
-﻿using AxSoft.Angular.Net.Sample.Models.Validations;
+﻿using System;
+using AxSoft.Angular.Net.Sample.Models.Validations;
 using System.ComponentModel.DataAnnotations;
 
 namespace AxSoft.Angular.Net.Sample.Models
@@ -30,5 +31,10 @@ namespace AxSoft.Angular.Net.Sample.Models
 
 		[Display(Name = "Street Address")]
 		public string StreetAddress { get; set; }
+
+		[Required]
+		[Display(Name = "Credit Amount")]
+		[Double(MinValue = 0, MaxValue = 10000, ErrorMessage = "The {0} field must be a valid decimal number and must not exceed 10,000.")]
+		public double CreditAmount { get; set; }
 	}
 }

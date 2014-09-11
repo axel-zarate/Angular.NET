@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using AxSoft.Angular.Net.Sample.Models.Validations;
+using AxSoft.Angular.Net.Sample.Models.Validations.Adapters;
 
 namespace AxSoft.Angular.Net.Sample
 {
@@ -33,9 +34,12 @@ namespace AxSoft.Angular.Net.Sample
 
 			AxSoft.Angular.Net.Validation.AngularDataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
 
-			// Whenever a PostalCodeAttribute attribute is found, use the RegularExpressionAttributeAdapter
+			// Whenever a PostalCodeAttribute attribute is found, use the included RegularExpressionAttributeAdapter
 			AxSoft.Angular.Net.Validation.AngularDataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(PostalCodeAttribute), 
 				typeof(AxSoft.Angular.Net.Validation.RegularExpressionAttributeAdapter));
+
+			// Whenever a DoubleAttribute attribute is found, use the custom DoubleAttributeAdapter
+			AxSoft.Angular.Net.Validation.AngularDataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(DoubleAttribute), typeof(DoubleAttributeAdapter));
 		}
 	}
 }

@@ -32,7 +32,8 @@ namespace AxSoft.Angular.Net.Sample
 			bundles.Add(new ScriptBundle("~/bundles/app").Include(
 				"~/Scripts/app/app.js",
 				"~/Scripts/app/routes.js",
-				"~/Scripts/app/controllers/*.js"));
+				"~/Scripts/app/controllers/*.js",
+				"~/Scripts/app/directives/*.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css/app").Include(
 					"~/Content/css/bootstrap.css",

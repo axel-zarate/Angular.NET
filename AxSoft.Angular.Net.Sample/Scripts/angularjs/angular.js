@@ -16283,7 +16283,7 @@ function FormController(element, attrs, $scope, $animate) {
    * @description
    * Sets all controls to dirty state.
    *
-   * Added by Axel (azarate@pinnacleaerospace.com)
+   * Added by Axel Zarate
    */
   form.$setAllDirty = function () {
     form.$setDirty();
@@ -17703,7 +17703,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * @description
    * Sets the control to dirty state.
    *
-   * Added by Axel (azarate@pinnacleaerospace.com)
+   * Added by Axel Zarate
    */
   this.$setDirty = function () {
     this.$dirty = true;

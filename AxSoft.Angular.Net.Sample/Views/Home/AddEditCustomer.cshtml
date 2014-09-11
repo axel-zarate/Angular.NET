@@ -9,45 +9,62 @@
 @using (var form = Html.BeginAngularForm("customerForm", "save", "customer", new { @class = "form-horizontal" }))
 {
 	<div class="form-group" @form.NgClassError(x => x.FirstName)>
-		@form.Label(x => x.FirstName, new { @class = "col-md-2 control-label"})
+		@form.Label(x => x.FirstName, new { @class = "col-md-2 control-label" })
 		<div class="col-md-6">
 			@form.TextBox(x => x.FirstName, new { @class = "form-control" })
 			@form.ValidationsFor(x => x.FirstName)
 		</div>
 	</div>
 	<div class="form-group" @form.NgClassError(x => x.LastName)>
-		@form.Label(x => x.LastName, new { @class = "col-md-2 control-label"})
+		@form.Label(x => x.LastName, new { @class = "col-md-2 control-label" })
 		<div class="col-md-6">
 			@form.TextBox(x => x.LastName, new { @class = "form-control" })
 			@form.ValidationsFor(x => x.LastName)
 		</div>
 	</div>
 	<div class="form-group" @form.NgClassError(x => x.Age)>
-		@form.Label(x => x.Age, new { @class = "col-md-2 control-label"})
+		@form.Label(x => x.Age, new { @class = "col-md-2 control-label" })
 		<div class="col-md-6">
 			@form.TextBox(x => x.Age, new { @class = "form-control", type = "number" })
 			@form.ValidationsFor(x => x.Age)
 		</div>
 	</div>
 	<div class="form-group" @form.NgClassError(x => x.StreetAddress)>
-		@form.Label(x => x.StreetAddress, new { @class = "col-md-2 control-label"})
+		@form.Label(x => x.StreetAddress, new { @class = "col-md-2 control-label" })
 		<div class="col-md-6">
 			@form.TextBox(x => x.StreetAddress, new { @class = "form-control" })
 			@form.ValidationsFor(x => x.StreetAddress)
 		</div>
 	</div>
 	<div class="form-group" @form.NgClassError(x => x.PostalCode)>
-		@form.Label(x => x.PostalCode, new { @class = "col-md-2 control-label"})
+		@form.Label(x => x.PostalCode, new { @class = "col-md-2 control-label" })
 		<div class="col-md-6">
 			@form.TextBox(x => x.PostalCode, new { @class = "form-control" })
 			@form.ValidationsFor(x => x.PostalCode)
 		</div>
 	</div>
 	<div class="form-group" @form.NgClassError(x => x.EmailAddress)>
-		@form.Label(x => x.EmailAddress, new { @class = "col-md-2 control-label"})
+		@form.Label(x => x.EmailAddress, new { @class = "col-md-2 control-label" })
 		<div class="col-md-6">
 			@form.TextBox(x => x.EmailAddress, new { @class = "form-control" })
 			@form.ValidationsFor(x => x.EmailAddress)
+		</div>
+	</div>
+	<div class="form-group" @form.NgClassError(x => x.CreditAmount)>
+		@form.Label(x => x.CreditAmount, new { @class = "col-md-2 control-label" })
+		<div class="col-md-6">
+			@form.TextBox(x => x.CreditAmount, new { @class = "form-control" })
+			@form.ValidationsFor(x => x.CreditAmount)
+		</div>
+	</div>
+	<div class="row" ng-show="errorMessage">
+		<div class="col-md-6 col-md-offset-2">
+			<div class="alert alert-danger fade in" role="alert">
+				<button type="button" class="close" data-dismiss="alert" ng-click="errorMessage = null">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<p>{{errorMessage}}</p>
+			</div>
 		</div>
 	</div>
 	<div class="form-group">

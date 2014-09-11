@@ -23,14 +23,17 @@
 
 		$scope.save = function (form) {
 			if (form.$invalid) {
+				form.$setAllDirty(); // This method was added by me directly on the angular.js source code file
 				return;
 			}
 
+			$scope.errorMessage = null;
+
 			var fn = $scope.isAdd ? customerService.save : customerService.update;
-			fn($scope.customer, function (response) {
+			fn($scope.customer, function () {
 				$location.url('/Customers');
 			}, function (response) {
-				$scope.errorMessage = 'Error';
+				$scope.errorMessage = response.Message || 'Error';
 			});
 		};
 
