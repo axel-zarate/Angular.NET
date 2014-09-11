@@ -121,10 +121,13 @@
       <Link>Properties\GeneralAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Controllers\Api\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\Validations\PostalCodeAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -135,9 +138,11 @@
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\site.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\angularjs\angular-resource.js" />
     <Content Include="Scripts\angularjs\angular-route.js" />
     <Content Include="Scripts\angularjs\angular.js" />
     <Content Include="Scripts\app\app.js" />
+    <Content Include="Scripts\app\controllers\customersController.js" />
     <Content Include="Scripts\app\controllers\homeController.js" />
     <Content Include="Scripts\app\routes.js" />
     <Content Include="Scripts\bootstrap\alert.js" />
@@ -159,8 +164,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\Api\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -184,9 +187,12 @@
     <Content Include="Content\css\bootstrap.css.map" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Customers.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\AddEditCustomer.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

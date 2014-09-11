@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using AxSoft.Angular.Net.Sample.Models.Validations;
 
 namespace AxSoft.Angular.Net.Sample
 {
@@ -21,6 +22,20 @@ namespace AxSoft.Angular.Net.Sample
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+			ConfigureAngularNet();
+		}
+
+		private static void ConfigureAngularNet()
+		{
+			AxSoft.Angular.Net.AngularConfiguration.ErrorCssClass = "has-error";
+			AxSoft.Angular.Net.AngularConfiguration.HelpCssClass = "help-block";
+
+			AxSoft.Angular.Net.Validation.AngularDataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
+
+			// Whenever a PostalCodeAttribute attribute is found, use the RegularExpressionAttributeAdapter
+			AxSoft.Angular.Net.Validation.AngularDataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(PostalCodeAttribute), 
+				typeof(AxSoft.Angular.Net.Validation.RegularExpressionAttributeAdapter));
 		}
 	}
 }

@@ -15,7 +15,8 @@ namespace AxSoft.Angular.Net.Sample
 			// Angular
 			bundles.Add(new ScriptBundle("~/bundles/angular").Include(
 				"~/Scripts/angularjs/angular.js",
-				"~/Scripts/angularjs/angular-route.js"));
+				"~/Scripts/angularjs/angular-route.js",
+				"~/Scripts/angularjs/angular-resource.js"));
 
 			// Bootstrap
 			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(

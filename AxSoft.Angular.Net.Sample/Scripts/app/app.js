@@ -2,7 +2,7 @@
 	'use strict';
 
 	// Register Main app module
-	var app = angular.module('AxSoft', ['ngRoute']);
+	var app = angular.module('AxSoft', ['ngResource', 'ngRoute']);
 
 	app.run(['$rootScope', '$window', function ($rootScope, $window) {
 		

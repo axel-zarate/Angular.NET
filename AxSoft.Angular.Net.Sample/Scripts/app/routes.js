@@ -12,10 +12,20 @@
 
 		$routeProvider.when('/', defaultRoute)
 			.when('/Home', defaultRoute)
-			.when('/About', {
-				title: 'About Us',
-				templateUrl: base + 'About',
-				controller: 'HomeController'
+			.when('/Customers', {
+				title: 'Customers',
+				templateUrl: base + 'Customers',
+				controller: 'CustomersController'
+			})
+			.when('/AddCustomer', {
+				title: 'Add Customer',
+				templateUrl: base + 'AddEditCustomer',
+				controller: 'CustomerEditController'
+			})
+			.when('/EditCustomer/:id', {
+				title: 'Edit Customer',
+				templateUrl: base + 'AddEditCustomer',
+				controller: 'CustomerEditController'
 			})
 			.when('/Contact', {
 				title: 'Contact Us',
