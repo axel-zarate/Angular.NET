@@ -5,13 +5,11 @@ namespace AxSoft.Angular.Net
 	/// </summary>
 	public class AngularConfiguration
 	{
-		private static string _errorCssClass = "error";
-		private static string _labelCssClass = "control-label";
-		private static string _inlineHelpCssClass = "help-inline";
-
 		internal const string ElementNameDelimiter = "_";
-
 		internal const string PropertyDelimiter = ".";
+		private static string _errorCssClass = "error";
+		private static string _inlineHelpCssClass = "help-inline";
+		private static string _labelCssClass = "control-label";
 
 		/// <summary>
 		/// Gets or sets the name of the CSS class to use for validation errors.
@@ -23,21 +21,21 @@ namespace AxSoft.Angular.Net
 		}
 
 		/// <summary>
-		///  Gets or sets the name of the CSS class to use for HTML label elements.
-		/// </summary>
-		public static string LabelCssClass
-		{
-			get { return _labelCssClass; }
-			set { _labelCssClass = value; }
-		}
-
-		/// <summary>
 		/// Gets or sets the name of the CSS class to use for validation message elements.
 		/// </summary>
 		public static string HelpCssClass
 		{
 			get { return _inlineHelpCssClass; }
 			set { _inlineHelpCssClass = value; }
+		}
+
+		/// <summary>
+		///  Gets or sets the name of the CSS class to use for HTML label elements.
+		/// </summary>
+		public static string LabelCssClass
+		{
+			get { return _labelCssClass; }
+			set { _labelCssClass = value; }
 		}
 	}
 }

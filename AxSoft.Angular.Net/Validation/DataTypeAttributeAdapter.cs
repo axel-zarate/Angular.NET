@@ -21,7 +21,7 @@ namespace AxSoft.Angular.Net.Validation
 		public override IEnumerable<ValidationRule> GetClientValidationRules()
 		{
 			var rule = new ValidationRule { ErrorMessage = ErrorMessage };
-			
+
 			string ruleName = RuleName, attrName = "type", attrValue = RuleName;
 			if (string.IsNullOrEmpty(ruleName))
 			{

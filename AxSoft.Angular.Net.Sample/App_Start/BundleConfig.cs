@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace AxSoft.Angular.Net.Sample
 {

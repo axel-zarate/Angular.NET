@@ -159,7 +159,7 @@ namespace AxSoft.Angular.Net
 		public NgRepeatContext<TItem> Repeat<TItem>(Expression<Func<TModel, IEnumerable<TItem>>> listExpression)
 		{
 			string value = ExpressionHelper.GetExpressionText(listExpression);
-			
+
 			var childHelper = new HtmlHelper<TItem>(Helper.ViewContext, Helper.ViewDataContainer);
 			return new NgRepeatContext<TItem>(childHelper, value, Prefix);
 		}
