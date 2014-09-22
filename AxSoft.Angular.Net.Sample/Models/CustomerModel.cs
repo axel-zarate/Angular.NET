@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AxSoft.Angular.Net.Sample.Models
 {
-	public class CustomerModel
+	public class CustomerModel : Person
 	{
 		[Required]
 		[Range(1, 100, ErrorMessage = "{0} must be greater than {1} and should not exceed {2} years.")]
@@ -20,21 +20,26 @@ namespace AxSoft.Angular.Net.Sample.Models
 		[Display(Name = "Email Address")]
 		public string EmailAddress { get; set; }
 
-		[Required]
-		[Display(Name = "First Name")]
-		public string FirstName { get; set; }
-
-		public int Id { get; set; }
-
-		[Required]
-		[Display(Name = "Last Name")]
-		public string LastName { get; set; }
-
 		[PostalCode]
 		[Display(Name = "Postal Code")]
 		public string PostalCode { get; set; }
 
 		[Display(Name = "Street Address")]
 		public string StreetAddress { get; set; }
+	}
+
+	public class Person
+	{
+		public int Id { get; set; }
+
+		[Required]
+		[StringLength(25)]
+		[Display(Name = "First Name")]
+		public string FirstName { get; set; }
+
+		[Required]
+		[StringLength(25)]
+		[Display(Name = "Last Name")]
+		public string LastName { get; set; }
 	}
 }

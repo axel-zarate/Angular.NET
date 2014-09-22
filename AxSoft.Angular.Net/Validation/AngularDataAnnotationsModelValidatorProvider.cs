@@ -43,7 +43,11 @@ namespace AxSoft.Angular.Net.Validation
 			(metadata, context, attribute) => new AngularDataAnnotationsModelValidator(metadata, context, attribute);
 
 		private static readonly ReaderWriterLockSlim AdaptersLock = new ReaderWriterLockSlim();
-		private static bool _addImplicitRequiredAttributeForValueTypes = true;
+
+		static AngularDataAnnotationsModelValidatorProvider()
+		{
+			AddImplicitRequiredAttributeForValueTypes = false;
+		}
 
 		/// <summary>
 		/// Gets or sets a value indicating whether non-nullable value types are required.
@@ -51,11 +55,7 @@ namespace AxSoft.Angular.Net.Validation
 		/// <value>
 		/// <c>true</c> if non-nullable value types are required; otherwise, <c>false</c>.
 		/// </value>
-		public static bool AddImplicitRequiredAttributeForValueTypes
-		{
-			get { return _addImplicitRequiredAttributeForValueTypes; }
-			set { _addImplicitRequiredAttributeForValueTypes = value; }
-		}
+		public static bool AddImplicitRequiredAttributeForValueTypes { get; set; }
 
 		/// <summary>
 		/// Registers an adapter to provide client-side validation.
