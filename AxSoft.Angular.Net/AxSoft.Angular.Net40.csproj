@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AxSoft.Angular.Net</RootNamespace>
     <AssemblyName>AxSoft.Angular.Net</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -17,8 +17,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET45</DefineConstants>
+    <OutputPath>bin\Debug\NET40\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -26,11 +26,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NET45</DefineConstants>
+    <OutputPath>bin\Release\NET40\</OutputPath>
+    <DefineConstants>TRACE;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\AxSoft.Angular.Net.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\NET40\AxSoft.Angular.Net.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
@@ -103,7 +103,6 @@
     <Compile Include="Validation\AngularModelValidatorProvider.cs" />
     <Compile Include="Validation\AngularModelValidatorProviderCollection.cs" />
     <Compile Include="Validation\AngularModelValidatorProviders.cs" />
-    <Compile Include="Validation\CompareAttributeAdapter.cs" />
     <Compile Include="Validation\DataTypeAttributeAdapter.cs" />
     <Compile Include="Validation\EqualToValidationRule.cs" />
     <Compile Include="Validation\AngularDataAnnotationsModelValidator.cs" />

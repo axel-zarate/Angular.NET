@@ -16,7 +16,11 @@ namespace AxSoft.Angular.Net.Sample.Models
 		[Double(MinValue = 0, MaxValue = 10000, ErrorMessage = "The {0} field must be a valid decimal number and must not exceed 10,000.")]
 		public double CreditAmount { get; set; }
 
+#if NET40
+		[DataType(DataType.EmailAddress)]
+#else
 		[EmailAddress]
+#endif
 		[Display(Name = "Email Address")]
 		public string EmailAddress { get; set; }
 
