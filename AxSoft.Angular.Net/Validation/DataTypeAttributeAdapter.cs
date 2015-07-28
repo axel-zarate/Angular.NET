@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace AxSoft.Angular.Net.Validation
 {
-	internal class DataTypeAttributeAdapter : AngularDataAnnotationsModelValidator
+	public class DataTypeAttributeAdapter : AngularDataAnnotationsModelValidator
 	{
 		private readonly DataType _dataType;
 
@@ -21,7 +21,7 @@ namespace AxSoft.Angular.Net.Validation
 		public override IEnumerable<ValidationRule> GetClientValidationRules()
 		{
 			var rule = new ValidationRule { ErrorMessage = ErrorMessage };
-
+			
 			string ruleName = RuleName, attrName = "type", attrValue = RuleName;
 			if (string.IsNullOrEmpty(ruleName))
 			{

@@ -15,14 +15,14 @@ namespace AxSoft.Angular.Net
 	public class NgClassErrorBinding<TModel> : IHtmlString
 		where TModel : class
 	{
-		private readonly List<string> _dirty = new List<string>();
+		private readonly List<string> _conditions = new List<string>();
+		private readonly ValidationMode _validationMode;
 		private readonly AngularForm<TModel> _form;
-		private readonly bool _onDirtyOnly;
 		private readonly List<string> _validations = new List<string>();
 
-		internal NgClassErrorBinding(bool onDirtyOnly, AngularForm<TModel> form)
+		internal NgClassErrorBinding(ValidationMode validationMode, AngularForm<TModel> form)
 		{
-			_onDirtyOnly = onDirtyOnly;
+			_validationMode = validationMode;
 			_form = form;
 		}
 
@@ -38,9 +38,17 @@ namespace AxSoft.Angular.Net
 			var formNodeName = _form.GetElementFormIdentifier(nodeName);
 			_validations.Add(formNodeName + ".$invalid");
 
-			if (_onDirtyOnly)
+			switch (_validationMode)
 			{
-				_dirty.Add(formNodeName + ".$dirty");
+				case ValidationMode.FormSubmitted:
+					_conditions.Add(_form.Name + ".$submitted");
+					break;
+				case ValidationMode.FormDirty:
+					_conditions.Add(_form.Name + ".$dirty");
+					break;
+				case ValidationMode.ControlDirty:
+					_conditions.Add(formNodeName + ".$dirty");
+					break;
 			}
 
 			return this;
@@ -58,10 +66,10 @@ namespace AxSoft.Angular.Net
 				builder.Append(string.Join(" || ", _validations));
 				builder.Append(")");
 
-				if (_dirty.Any())
+				if (_conditions.Any())
 				{
 					builder.Append(" && (");
-					builder.Append(string.Join(" || ", _dirty));
+					builder.Append(string.Join(" || ", _conditions));
 					builder.Append(")");
 				}
 				builder.Append(" }\"");

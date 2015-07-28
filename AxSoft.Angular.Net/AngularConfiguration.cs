@@ -1,3 +1,6 @@
+using System;
+using System.Linq.Expressions;
+
 namespace AxSoft.Angular.Net
 {
 	/// <summary>
@@ -5,11 +8,14 @@ namespace AxSoft.Angular.Net
 	/// </summary>
 	public class AngularConfiguration
 	{
-		internal const string ElementNameDelimiter = "_";
-		internal const string PropertyDelimiter = ".";
 		private static string _errorCssClass = "error";
-		private static string _inlineHelpCssClass = "help-inline";
 		private static string _labelCssClass = "control-label";
+		private static string _inlineHelpCssClass = "help-inline";
+		private static ValidationMode _defaultControlValidationMode = ValidationMode.FormSubmitted;
+
+		internal const string ElementNameDelimiter = "_";
+
+		internal const string PropertyDelimiter = ".";
 
 		/// <summary>
 		/// Gets or sets the name of the CSS class to use for validation errors.
@@ -18,6 +24,15 @@ namespace AxSoft.Angular.Net
 		{
 			get { return _errorCssClass; }
 			set { _errorCssClass = value; }
+		}
+
+		/// <summary>
+		///  Gets or sets the name of the CSS class to use for HTML label elements.
+		/// </summary>
+		public static string LabelCssClass
+		{
+			get { return _labelCssClass; }
+			set { _labelCssClass = value; }
 		}
 
 		/// <summary>
@@ -30,12 +45,19 @@ namespace AxSoft.Angular.Net
 		}
 
 		/// <summary>
-		///  Gets or sets the name of the CSS class to use for HTML label elements.
+		/// Gets or sets the default control validation mode for controls inside form elements.
 		/// </summary>
-		public static string LabelCssClass
+		/// <value>
+		/// The default control validation mode.
+		/// </value>
+		/// <remarks>
+		/// This value will affect the way in which the <see cref="AngularForm{TModel}.NgClassError{TProperty}(Expression{Func{TModel, TProperty}})"/> method
+		/// renders the ng-class directive.
+		/// </remarks>
+		public static ValidationMode DefaultControlValidationMode
 		{
-			get { return _labelCssClass; }
-			set { _labelCssClass = value; }
+			get { return _defaultControlValidationMode; }
+			set { _defaultControlValidationMode = value; }
 		}
 	}
 }

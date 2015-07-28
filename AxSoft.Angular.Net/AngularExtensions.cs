@@ -144,10 +144,10 @@ namespace AxSoft.Angular.Net
 			return helper.BeginAngularFormHelper(name, submitMethod, prefix, htmlAttributes, false, true);
 		}
 
-		//public static AngularForm<TModel> BeginAngularFormStub<TModel>(this HtmlHelper<TModel> helper, string name, string prefix) where TModel : class
-		//{
-		//	return helper.BeginAngularFormHelper(name, null, prefix, null, false, false);
-		//}
+        public static AngularForm<TModel> BeginAngularFormStub<TModel>(this HtmlHelper<TModel> helper, string name, string prefix) where TModel : class
+        {
+            return helper.BeginAngularFormHelper(name, null, prefix, null, false, false);
+        }
 
 		#endregion Angular Form
 

@@ -34,6 +34,13 @@ namespace AxSoft.Angular.Net
 			get { return _prefix; }
 		}
 
+		internal string GetPropertyIdentifier(string expressionText)
+		{
+			return string.Format("{0}{1}",
+				GetPropertyPrefix(AngularConfiguration.PropertyDelimiter),
+				expressionText);
+		}
+
 		/// <summary>
 		/// Gets a string used to prefix properties for bindings.
 		/// </summary>
@@ -76,6 +83,32 @@ namespace AxSoft.Angular.Net
 		protected HtmlHelper<TModel> Helper
 		{
 			get { return _helper; }
+		}
+
+		/// <summary>
+		/// Gets the full HTML field name for the object that is represented by the expression.
+		/// </summary>
+		/// <typeparam name="TProperty">The type of the property.</typeparam>
+		/// <param name="expression">An expression that identifies the object that contains the name.</param>
+		/// <returns>The full HTML field name for the object that is represented by the expression.</returns>
+		public IHtmlString NameFor<TProperty>(Expression<Func<TModel, TProperty>> expression)
+		{
+			var expressionText = ExpressionHelper.GetExpressionText(expression);
+			var nodeName = GetPropertyIdentifier(expressionText);
+			return new MvcHtmlString(nodeName);
+		}
+
+		/// <summary>
+		/// Gets the client-side property name for the object that is represented by the expression.
+		/// </summary>
+		/// <typeparam name="TProperty">The type of the property.</typeparam>
+		/// <param name="expression">An expression that identifies the object that contains the name.</param>
+		/// <returns>The client-side property name for the object that is represented by the expression.</returns>
+		public IHtmlString PropertyNameFor<TProperty>(Expression<Func<TModel, TProperty>> expression)
+		{
+			var expressionText = ExpressionHelper.GetExpressionText(expression);
+			var nodeName = GetPropertyIdentifier(expressionText);
+			return new MvcHtmlString(nodeName);
 		}
 
 		/// <summary>
@@ -159,7 +192,7 @@ namespace AxSoft.Angular.Net
 		public NgRepeatContext<TItem> Repeat<TItem>(Expression<Func<TModel, IEnumerable<TItem>>> listExpression)
 		{
 			string value = ExpressionHelper.GetExpressionText(listExpression);
-
+			
 			var childHelper = new HtmlHelper<TItem>(Helper.ViewContext, Helper.ViewDataContainer);
 			return new NgRepeatContext<TItem>(childHelper, value, Prefix);
 		}

@@ -9,6 +9,14 @@ using System.Web.Mvc;
 
 namespace AxSoft.Angular.Net
 {
+	public enum ValidationMode
+	{
+		FormDirty,
+		ControlDirty,
+		FormSubmitted,
+		Always
+	}
+
 	/// <summary>
 	/// Represents an HTML form element in an MVC view that contains AngularJS bindings.
 	/// </summary>
@@ -21,6 +29,15 @@ namespace AxSoft.Angular.Net
 		private readonly bool _render;
 		private readonly string _submitMethod;
 		private bool _disposed;
+
+		/// <summary>
+		/// Gets or sets the control validation mode.
+		/// </summary>
+		/// <value>
+		/// The validation mode.
+		/// </value>
+		public ValidationMode ValidationMode { get; set; }
+
 		//private readonly Dictionary<string, ModelMetadata> _cachedMetadatas = new Dictionary<string, ModelMetadata>(StringComparer.CurrentCultureIgnoreCase);
 
 		internal AngularForm(HtmlHelper<TModel> helper, string name, string submitMethod, string prefix, IDictionary<string, object> htmlAttributes, bool render)
@@ -43,6 +60,8 @@ namespace AxSoft.Angular.Net
 			}
 			_htmlAttributes = htmlAttributes;
 			_render = render;
+
+			ValidationMode = AngularConfiguration.DefaultControlValidationMode;
 		}
 
 		/// <summary>
@@ -331,19 +350,6 @@ namespace AxSoft.Angular.Net
 		}
 
 		/// <summary>
-		/// Gets the full HTML field name for the object that is represented by the expression.
-		/// </summary>
-		/// <typeparam name="TProperty">The type of the property.</typeparam>
-		/// <param name="expression">An expression that identifies the object that contains the name.</param>
-		/// <returns>The full HTML field name for the object that is represented by the expression.</returns>
-		public IHtmlString NameFor<TProperty>(Expression<Func<TModel, TProperty>> expression)
-		{
-			var expressionText = ExpressionHelper.GetExpressionText(expression);
-			var nodeName = GetPropertyIdentifier(expressionText);
-			return new MvcHtmlString(nodeName);
-		}
-
-		/// <summary>
 		/// Retrieves the validation metadata for the specified expression and generates an ng-class directive that applies an error for each validation rule.
 		/// </summary>
 		/// <typeparam name="TProperty">The type of the property.</typeparam>
@@ -351,7 +357,7 @@ namespace AxSoft.Angular.Net
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is an appropriate nesting of generic types")]
 		public NgClassErrorBinding<TModel> NgClassError<TProperty>(Expression<Func<TModel, TProperty>> expression)
 		{
-			return new NgClassErrorBinding<TModel>(true, this).And(expression);
+			return new NgClassErrorBinding<TModel>(ValidationMode, this).And(expression);
 		}
 
 		/// <summary>
@@ -359,11 +365,11 @@ namespace AxSoft.Angular.Net
 		/// </summary>
 		/// <typeparam name="TProperty">The type of the property.</typeparam>
 		/// <param name="expression">An expression that identifies the object that contains the properties to render.</param>
-		/// <param name="onDirtyOnly">A value that indicates that the element should become visible only if the field has been modified.</param>
+		/// <param name="validationMode">A value that indicates when the validation element should become visible.</param>
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is an appropriate nesting of generic types")]
-		public NgClassErrorBinding<TModel> NgClassError<TProperty>(Expression<Func<TModel, TProperty>> expression, bool onDirtyOnly)
+		public NgClassErrorBinding<TModel> NgClassError<TProperty>(Expression<Func<TModel, TProperty>> expression, ValidationMode validationMode)
 		{
-			return new NgClassErrorBinding<TModel>(onDirtyOnly, this).And(expression);
+			return new NgClassErrorBinding<TModel>(validationMode, this).And(expression);
 		}
 
 		/// <summary>
@@ -400,19 +406,6 @@ namespace AxSoft.Angular.Net
 		{
 			var metadata = ModelMetadata.FromLambdaExpression(expression, _helper.ViewData);
 			return Input(expression, "password", htmlAttributes, metadata);
-		}
-
-		/// <summary>
-		/// Gets the client-side property name for the object that is represented by the expression.
-		/// </summary>
-		/// <typeparam name="TProperty">The type of the property.</typeparam>
-		/// <param name="expression">An expression that identifies the object that contains the name.</param>
-		/// <returns>The client-side property name for the object that is represented by the expression.</returns>
-		public IHtmlString PropertyNameFor<TProperty>(Expression<Func<TModel, TProperty>> expression)
-		{
-			var expressionText = ExpressionHelper.GetExpressionText(expression);
-			var nodeName = GetPropertyIdentifier(expressionText);
-			return new MvcHtmlString(nodeName);
 		}
 
 		/// <summary>
@@ -542,7 +535,7 @@ namespace AxSoft.Angular.Net
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is an appropriate nesting of generic types")]
 		public IHtmlString ValidationsFor<TProperty>(Expression<Func<TModel, TProperty>> expression)
 		{
-			return ValidationsFor(expression, true, null);
+			return ValidationsFor(expression, ValidationMode, null);
 		}
 
 		/// <summary>
@@ -550,11 +543,11 @@ namespace AxSoft.Angular.Net
 		/// </summary>
 		/// <typeparam name="TProperty">The type of the property.</typeparam>
 		/// <param name="expression">An expression that identifies the object that contains the properties to render.</param>
-		/// <param name="onDirtyOnly">A value that indicates that the element should become visible only if the field has been modified.</param>
+		/// <param name="validationMode">A value that indicates that the element should become visible only if the field has been modified.</param>
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is an appropriate nesting of generic types")]
-		public IHtmlString ValidationsFor<TProperty>(Expression<Func<TModel, TProperty>> expression, bool onDirtyOnly)
+		public IHtmlString ValidationsFor<TProperty>(Expression<Func<TModel, TProperty>> expression, ValidationMode validationMode)
 		{
-			return ValidationsFor(expression, onDirtyOnly, null);
+			return ValidationsFor(expression, validationMode, null);
 		}
 
 		/// <summary>
@@ -562,12 +555,12 @@ namespace AxSoft.Angular.Net
 		/// </summary>
 		/// <typeparam name="TProperty">The type of the property.</typeparam>
 		/// <param name="expression">An expression that identifies the object that contains the properties to render.</param>
-		/// <param name="onDirtyOnly">A value that indicates that the element should become visible only if the field has been modified.</param>
+		/// <param name="validationMode">A value that indicates that the element should become visible only if the field has been modified.</param>
 		/// <param name="htmlAttributes">An object that contains the HTML attributes for the element.</param>
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is an appropriate nesting of generic types")]
-		public IHtmlString ValidationsFor<TProperty>(Expression<Func<TModel, TProperty>> expression, bool onDirtyOnly, object htmlAttributes)
+		public IHtmlString ValidationsFor<TProperty>(Expression<Func<TModel, TProperty>> expression, ValidationMode validationMode, object htmlAttributes)
 		{
-			return ValidationsFor(expression, onDirtyOnly, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+			return ValidationsFor(expression, validationMode, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
 		}
 
 		/// <summary>
@@ -575,10 +568,10 @@ namespace AxSoft.Angular.Net
 		/// </summary>
 		/// <typeparam name="TProperty">The type of the property.</typeparam>
 		/// <param name="expression">An expression that identifies the object that contains the properties to render.</param>
-		/// <param name="onDirtyOnly">A value that indicates that the element should become visible only if the field has been modified.</param>
+		/// <param name="validationMode">A value that indicates that the element should become visible only if the field has been modified.</param>
 		/// <param name="htmlAttributes">A dictionary that contains the HTML attributes for the element.</param>
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is an appropriate nesting of generic types")]
-		public IHtmlString ValidationsFor<TProperty>(Expression<Func<TModel, TProperty>> expression, bool onDirtyOnly, IDictionary<string, object> htmlAttributes)
+		public IHtmlString ValidationsFor<TProperty>(Expression<Func<TModel, TProperty>> expression, ValidationMode validationMode, IDictionary<string, object> htmlAttributes)
 		{
 			var metadata = ModelMetadata.FromLambdaExpression(expression, _helper.ViewData);
 			var tagBuilders = new List<AngularTagBuilder>();
@@ -589,7 +582,7 @@ namespace AxSoft.Angular.Net
 			var rules = GetValidationRules(metadata);
 			foreach (var rule in rules)
 			{
-				var tagBuilder = CreateValidationTagBuilder(rule, formNodeName, onDirtyOnly, htmlAttributes);
+				var tagBuilder = CreateValidationTagBuilder(rule, formNodeName, validationMode, htmlAttributes);
 				tagBuilders.Add(tagBuilder);
 			}
 
@@ -622,13 +615,6 @@ namespace AxSoft.Angular.Net
 				GetPropertyPrefix(AngularConfiguration.ElementNameDelimiter),
 				expressionText)
 				.Replace(AngularConfiguration.PropertyDelimiter, AngularConfiguration.ElementNameDelimiter);
-		}
-
-		internal string GetPropertyIdentifier(string expressionText)
-		{
-			return string.Format("{0}{1}",
-				GetPropertyPrefix(AngularConfiguration.PropertyDelimiter),
-				expressionText);
 		}
 
 		internal void Initialize()
@@ -673,7 +659,7 @@ namespace AxSoft.Angular.Net
 			}
 		}
 
-		private static AngularTagBuilder CreateValidationTagBuilder(ValidationRule rule, string nodeName, bool onDirtyOnly, IDictionary<string, object> htmlAttributes)
+		private AngularTagBuilder CreateValidationTagBuilder(ValidationRule rule, string nodeName, ValidationMode validationMode, IDictionary<string, object> htmlAttributes)
 		{
 			var tagBuilder = new AngularTagBuilder("span");
 			tagBuilder.Attributes["class"] = AngularConfiguration.HelpCssClass;
@@ -684,9 +670,17 @@ namespace AxSoft.Angular.Net
 				var validations = rule.ValidationParameters.Select(kvp => string.Format("{0}.$error.{1}", nodeName, kvp.Key));
 				ngShow += string.Format("({0})", string.Join(" || ", validations));
 
-				if (onDirtyOnly)
+				switch (validationMode)
 				{
-					ngShow += string.Format(" && {0}.$dirty", nodeName);
+					case ValidationMode.FormSubmitted:
+						ngShow += string.Format(" && {0}.$submitted", Name);
+						break;
+					case ValidationMode.FormDirty:
+						ngShow += string.Format(" && {0}.$dirty", Name);
+						break;
+					case ValidationMode.ControlDirty:
+						ngShow += string.Format(" && {0}.$dirty", nodeName);
+						break;
 				}
 			}
 

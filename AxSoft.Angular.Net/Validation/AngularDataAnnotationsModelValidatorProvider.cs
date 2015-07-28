@@ -7,11 +7,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Web.Mvc;
-
 #if NET45
-
 using DataAnnotationsCompareAttribute = System.ComponentModel.DataAnnotations.CompareAttribute;
-
 #endif
 
 namespace AxSoft.Angular.Net.Validation

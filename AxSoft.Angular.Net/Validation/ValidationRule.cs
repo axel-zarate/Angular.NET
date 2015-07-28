@@ -15,7 +15,7 @@ namespace AxSoft.Angular.Net.Validation
 		public string ErrorMessage { get; set; }
 
 		/// <summary>
-		/// Gets a dictionary of validation parameters. The key corresponds to the normalized AngularJS directive name,
+		/// Gets a dictionary of validation parameters. The key corresponds to the normalized AngularJS directive name, 
 		/// and the value is the corresponding attribute with an optional value.
 		/// </summary>
 		public IDictionary<string, AttributeValuePair> ValidationParameters

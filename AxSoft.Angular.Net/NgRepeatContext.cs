@@ -42,7 +42,13 @@ namespace AxSoft.Angular.Net
 			{
 				filter += " | " + filter;
 			}
-			string prefix = Prefix != null ? Prefix + AngularConfiguration.PropertyDelimiter : null;
+			//string prefix = !string.IsNullOrEmpty(Prefix) ? Prefix + AngularConfiguration.PropertyDelimiter : null;
+			string prefix = null;
+			if (!string.IsNullOrEmpty(Prefix))
+			{
+				prefix = Prefix + (!string.IsNullOrEmpty(Subexpression) ? AngularConfiguration.PropertyDelimiter : null);
+			}
+			
 			return CreateHtmlAttribute(DirectiveName, string.Format("{0} in {1}{2}{3}", Item, prefix, Subexpression, filter));
 		}
 	}
