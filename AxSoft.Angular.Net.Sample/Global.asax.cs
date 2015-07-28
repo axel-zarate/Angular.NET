@@ -1,6 +1,7 @@
 ﻿using AxSoft.Angular.Net.Sample.Models.Validations;
 using AxSoft.Angular.Net.Sample.Models.Validations.Adapters;
 using System.Web.Http;
+using System.Web.Http.Validation.Providers;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -21,6 +22,10 @@ namespace AxSoft.Angular.Net.Sample
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 
 			ConfigureAngularNet();
+
+			GlobalConfiguration.Configuration.Services.RemoveAll(
+				typeof(System.Web.Http.Validation.ModelValidatorProvider),
+				v => v is InvalidModelValidatorProvider);
 		}
 
 		private static void ConfigureAngularNet()

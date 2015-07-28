@@ -23,7 +23,6 @@
 
 		$scope.save = function (form) {
 			if (form.$invalid) {
-				form.$setAllDirty(); // This method was added by me directly on the angular.js source code file
 				return;
 			}
 
