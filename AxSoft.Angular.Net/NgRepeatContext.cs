@@ -17,14 +17,6 @@ namespace AxSoft.Angular.Net
 		}
 
 		/// <summary>
-		/// Gets the name of the context item.
-		/// </summary>
-		public override string Item
-		{
-			get { return "$item"; }
-		}
-
-		/// <summary>
 		/// Renders the ng-repeat directive.
 		/// </summary>
 		public override IHtmlString RenderDirective()
@@ -52,4 +44,30 @@ namespace AxSoft.Angular.Net
 			return CreateHtmlAttribute(DirectiveName, string.Format("{0} in {1}{2}{3}", Item, prefix, Subexpression, filter));
 		}
 	}
+
+#if DEBUG
+	public class NgRepeatForm<TModel> : AngularBindingSubcontext<TModel>
+	{
+		private const string DirectiveName = "ng-repeat";
+
+		internal NgRepeatForm(HtmlHelper<TModel> helper, string subexpression, string prefix) 
+			: base(helper, subexpression, prefix)
+		{
+		}
+
+		/// <summary>
+		/// Renders the ng-repeat directive.
+		/// </summary>
+		public override IHtmlString RenderDirective()
+		{
+			string prefix = null;
+			if (!string.IsNullOrEmpty(Prefix))
+			{
+				prefix = Prefix + (!string.IsNullOrEmpty(Subexpression) ? AngularConfiguration.PropertyDelimiter : null);
+			}
+
+			return CreateHtmlAttribute(DirectiveName, string.Format("{0} in {1}{2}", Item, prefix, Subexpression));
+		}
+	}
+#endif
 }

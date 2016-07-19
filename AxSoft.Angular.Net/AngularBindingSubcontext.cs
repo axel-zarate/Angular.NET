@@ -17,10 +17,16 @@ namespace AxSoft.Angular.Net
 			_subexpression = subexpression;
 		}
 
+		private readonly string _item = "$item";
+
 		/// <summary>
 		/// Gets the name of the context item.
 		/// </summary>
-		public abstract string Item { get; }
+
+		public virtual string Item
+		{
+			get { return _item; }
+		}
 
 		/// <summary>
 		/// Gets the AngularJS model expression for this subcontext.

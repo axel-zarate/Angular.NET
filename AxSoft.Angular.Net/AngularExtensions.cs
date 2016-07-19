@@ -153,30 +153,30 @@ namespace AxSoft.Angular.Net
 
 		//#region Ng Form
 
-		//public static AngularForm<TModel> BeginNgForm<TModel>(this HtmlHelper<TModel> helper) where TModel : class
-		//{
-		//	return helper.BeginNgForm(null);
-		//}
+		public static AngularForm<TModel> BeginNgForm<TModel>(this HtmlHelper<TModel> helper) where TModel : class
+		{
+			return helper.BeginNgForm(null);
+		}
 
-		//public static AngularForm<TModel> BeginNgForm<TModel>(this HtmlHelper<TModel> helper, string name) where TModel : class
-		//{
-		//	return helper.BeginNgForm(name, null);
-		//}
+		public static AngularForm<TModel> BeginNgForm<TModel>(this HtmlHelper<TModel> helper, string name) where TModel : class
+		{
+			return helper.BeginNgForm(name, null);
+		}
 
-		//public static AngularForm<TModel> BeginNgForm<TModel>(this HtmlHelper<TModel> helper, string name, object htmlAttributes) where TModel : class
-		//{
-		//	return helper.BeginNgForm(name, null, htmlAttributes);
-		//}
+		public static AngularForm<TModel> BeginNgForm<TModel>(this HtmlHelper<TModel> helper, string name, object htmlAttributes) where TModel : class
+		{
+			return helper.BeginNgForm(name, null, htmlAttributes);
+		}
 
-		//public static AngularForm<TModel> BeginNgForm<TModel>(this HtmlHelper<TModel> helper, string name, string prefix) where TModel : class
-		//{
-		//	return helper.BeginNgForm(name, prefix, null);
-		//}
+		public static AngularForm<TModel> BeginNgForm<TModel>(this HtmlHelper<TModel> helper, string name, string prefix) where TModel : class
+		{
+			return helper.BeginNgForm(name, prefix, null);
+		}
 
-		//public static AngularForm<TModel> BeginNgForm<TModel>(this HtmlHelper<TModel> helper, string name, string prefix, object htmlAttributes) where TModel : class
-		//{
-		//	return helper.BeginAngularFormHelper(name, null, prefix, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes), true);
-		//}
+		public static AngularForm<TModel> BeginNgForm<TModel>(this HtmlHelper<TModel> helper, string name, string prefix, object htmlAttributes) where TModel : class
+		{
+			return helper.BeginAngularFormHelper(name, null, prefix, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes), true, true);
+		}
 
 		//#endregion Ng Form
 

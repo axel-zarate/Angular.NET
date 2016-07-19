@@ -4,16 +4,32 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
 namespace AxSoft.Angular.Net
 {
+	/// <summary>
+	/// Specifies when to show the validation messages for a field.
+	/// </summary>
 	public enum ValidationMode
 	{
+		/// <summary>
+		/// Validations are shown when the any control in the form is modified.
+		/// </summary>
 		FormDirty,
+		/// <summary>
+		/// Validations are shown for each individual control when it is modified.
+		/// </summary>
 		ControlDirty,
+		/// <summary>
+		/// Validations are shown after the user tries to submit the form
+		/// </summary>
 		FormSubmitted,
+		/// <summary>
+		/// Validations are always displayed.
+		/// </summary>
 		Always
 	}
 
@@ -31,7 +47,7 @@ namespace AxSoft.Angular.Net
 		private bool _disposed;
 
 		/// <summary>
-		/// Gets or sets the control validation mode.
+		/// Gets or sets the form's validation mode.
 		/// </summary>
 		/// <value>
 		/// The validation mode.
@@ -346,6 +362,63 @@ namespace AxSoft.Angular.Net
 
 			tagBuilder.MergeAttributes(htmlAttributes, true);
 
+			return new MvcHtmlString(tagBuilder.ToString(TagRenderMode.Normal));
+		}
+
+		private readonly Regex _tagRegex = new Regex(@"^[a-z]+(-[a-z0-9]+)*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+		/// <summary>
+		/// Returns an HTML label element and the property name of the property that is represented by the specified expression.
+		/// </summary>
+		/// <typeparam name="TProperty">The type of the property.</typeparam>
+		/// <param name="tagName">The custom tag name.</param>
+		/// <param name="expression">An expression that identifies the property to display.</param>
+		/// <returns>A custom HTML element for each property in the object that is represented by the expression.</returns>
+		/// <exception cref="System.ArgumentNullException"><paramref name="tagName"/> is <c>null</c>.</exception>
+		/// <exception cref="System.ArgumentException"><paramref name="tagName"/> is not a valid HTML tag name.</exception>
+		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is an appropriate nesting of generic types")]
+		public IHtmlString Custom<TProperty>(string tagName, Expression<Func<TModel, TProperty>> expression)
+		{
+			return Custom(tagName, expression, null);
+		}
+
+		/// <summary>
+		/// Returns an HTML label element and the property name of the property that is represented by the specified expression.
+		/// </summary>
+		/// <typeparam name="TProperty">The type of the property.</typeparam>
+		/// <param name="tagName">The custom tag name.</param>
+		/// <param name="expression">An expression that identifies the property to display.</param>
+		/// <param name="htmlAttributes">An object that contains the HTML attributes to set for the element.</param>
+		/// <returns>A custom HTML element for each property in the object that is represented by the expression.</returns>
+		/// <exception cref="System.ArgumentNullException"><paramref name="tagName"/> is <c>null</c>.</exception>
+		/// <exception cref="System.ArgumentException"><paramref name="tagName"/> is not a valid HTML tag name.</exception>
+		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is an appropriate nesting of generic types")]
+		public IHtmlString Custom<TProperty>(string tagName, Expression<Func<TModel, TProperty>> expression, object htmlAttributes)
+		{
+			return Custom(tagName, expression, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+		}
+
+		/// <summary>
+		/// Returns an HTML label element and the property name of the property that is represented by the specified expression.
+		/// </summary>
+		/// <typeparam name="TProperty">The type of the property.</typeparam>
+		/// <param name="tagName">The custom tag name.</param>
+		/// <param name="expression">An expression that identifies the property to display.</param>
+		/// <param name="htmlAttributes">A dictionary that contains the HTML attributes to set for the element.</param>
+		/// <returns>A custom HTML element for each property in the object that is represented by the expression.</returns>
+		/// <exception cref="System.ArgumentNullException"><paramref name="tagName"/> is <c>null</c>.</exception>
+		/// <exception cref="System.ArgumentException"><paramref name="tagName"/> is not a valid HTML tag name.</exception>
+		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is an appropriate nesting of generic types")]
+		public IHtmlString Custom<TProperty>(string tagName, Expression<Func<TModel, TProperty>> expression, IDictionary<string, object> htmlAttributes)
+		{
+			if (tagName == null) throw new ArgumentNullException("tagName");
+			if (expression == null) throw new ArgumentNullException("expression");
+
+			if (!_tagRegex.IsMatch(tagName)) throw new ArgumentException(string.Format("Invalid tag name {0}", tagName));
+
+			var metadata = ModelMetadata.FromLambdaExpression(expression, _helper.ViewData);
+			var tagBuilder = CreateTagBuilder(expression, tagName, htmlAttributes, metadata);
+			
 			return new MvcHtmlString(tagBuilder.ToString(TagRenderMode.Normal));
 		}
 
